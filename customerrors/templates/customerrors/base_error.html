@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta description="base de errores" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error {{ status_code }} - {{ title|default:"Error" }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'customerrors/css/styles.css' %}" />
+  </head>
+  <body>
+    <div class="error-container">
+      <header>
+        {% if status_code == 404 %}
+        <h1>🚨 Error {{ status_code }}</h1>
+        <h2>{{ title }}</h2>
+        {% else %}
+        <h1>💥 Error 500</h1>
+        <h2>{{ title }}</h2>
+        {% endif %}
+      </header>
+
+      <main>
+        <p>{{ mensaje }}</p>
+        {% block extra_info %}{% endblock %}
+      </main>
+      <footer>
+        {% with small_title|lower as t_lower %} {% if t_lower == 'tarea' %}
+        <a href="{% url 'list_tasks' %}" class="btn">Tasks list</a>
+        {% endif %} {% endwith %}
+      </footer>
+    </div>
+  </body>
+</html>

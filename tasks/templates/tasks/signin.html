@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+  </head>
+  <body>
+    {% extends 'tasks/base.html' %} {% block content %}
+    <main class="container mt-5">
+      <div class="row">
+        <section class="col-md-4 offset-md-4">
+          <form method="post" class="card card-body">
+            <h1 class="text-center">Autenticación</h1>
+            {% csrf_token %} {% for field in form %}
+            <div class="mb-3">{{ field.label_tag }} {{ field}}</div>
+            {% endfor %}
+            <button class="btn btn-primary">Sign-In</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    {% endblock %}
+  </body>
+</html>

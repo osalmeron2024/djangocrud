@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error interno</title>
+  </head>
+  <body>
+    {% extends "customerrors/base_error.html" %} {% block extra_info %}
+    <p>Ocurrió un problema en el servidor. Estamos trabajando en ello.</p>
+    <footer>
+      <a href="{% url 'home' %}" class="btn">home</a>
+    </footer>
+    {% endblock %}
+  </body>
+</html>

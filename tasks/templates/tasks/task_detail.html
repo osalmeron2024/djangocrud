@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Detail</title>
+  </head>
+  <body>
+    {% extends 'tasks/base.html' %} {% block content %}
+    <main class="container my-4">
+      <div class="row justify-content-center">
+        <section class="col-lg-6 col-md-8 col-sm-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h1 class="card-title text-center card-title text-center py-3">
+                Task Detail
+              </h1>
+              <form method="post">
+                {% csrf_token %} {% for field in form %}
+                <div
+                  class="{% if field.name == 'important' %}form-check{% else %}mb-3{% endif %}"
+                >
+                  {{ field.label_tag }}{{ field }}
+                </div>
+                {% endfor %}
+                <div class="d-grid gap-2 d-md-flex">
+                  <button class="btn btn-primary">Update Task</button>
+
+                  {% if filter_task %}
+                  <form
+                    action="{% url 'complete_task' filter_task.id %}"
+                    method="post"
+                  >
+                    {% csrf_token %}
+                    <button class="btn btn-secondary">Complete Task</button>
+                  </form>
+                  {% else %}
+                  <p>No hay tarea para completar.</p>
+                  {% endif %} {% if filter_task %}
+                  <form
+                    action="{% url 'remove_task' filter_task.id %}"
+                    method="post"
+                  >
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Remove Task</button>
+                  </form>
+                  {% else %}
+                  <p>No hay tarea para borrar.</p>
+                  {% endif %} {% endblock %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
