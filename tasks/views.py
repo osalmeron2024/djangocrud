@@ -19,6 +19,9 @@ from .formauth import RegistroForm
 from .signin import LoginForm
 from .taskform import TaskForm
 from .models import Task
+import logging
+
+logger = logging.getLogger(__name__)
 
 # pylint: disable=too-many-ancestors
 
@@ -158,9 +161,14 @@ def complete_task(request, id_task):
     try:
         # filter_task = get_object_or_404(Task, pk=id_task)
         filter_task = get_object_or_404(Task, pk=id_task, user=request.user)
+        logger.debug("👉 Método HTTP: %s", request.method)
         if request.method == 'POST':
+            logger.debug("👉 Antes de actualizar: %s",
+                         filter_task.datecompleted)
             filter_task.datecompleted = timezone.now()
             filter_task.save()
+            logger.debug("👉 Después de actualizar: %s",
+                         filter_task.datecompleted)
             return redirect('list_tasks')
     except Task.DoesNotExist:
         raise Http404(id_task)

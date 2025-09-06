@@ -12,10 +12,10 @@
         <section class="col-lg-6 col-md-8 col-sm-12">
           <div class="card shadow-sm">
             <div class="card-body">
-              <h1 class="card-title text-center card-title text-center py-3">
-                Task Detail
-              </h1>
-              <form method="post">
+              <h1 class="card-title text-center py-3">Task Detail</h1>
+
+              <!-- Formulario Update Task -->
+              <form method="post" class="mb-3">
                 {% csrf_token %} {% for field in form %}
                 <div
                   class="{% if field.name == 'important' %}form-check{% else %}mb-3{% endif %}"
@@ -23,36 +23,40 @@
                   {{ field.label_tag }}{{ field }}
                 </div>
                 {% endfor %}
-                <div class="d-grid gap-2 d-md-flex">
-                  <button class="btn btn-primary">Update Task</button>
-
-                  {% if filter_task %}
-                  <form
-                    action="{% url 'complete_task' filter_task.id %}"
-                    method="post"
-                  >
-                    {% csrf_token %}
-                    <button class="btn btn-secondary">Complete Task</button>
-                  </form>
-                  {% else %}
-                  <p>No hay tarea para completar.</p>
-                  {% endif %} {% if filter_task %}
-                  <form
-                    action="{% url 'remove_task' filter_task.id %}"
-                    method="post"
-                  >
-                    {% csrf_token %}
-                    <button class="btn btn-danger">Remove Task</button>
-                  </form>
-                  {% else %}
-                  <p>No hay tarea para borrar.</p>
-                  {% endif %} {% endblock %}
-                </div>
+                <button class="btn btn-primary w-100">Update Task</button>
               </form>
+
+              <!-- Contenedor horizontal para los otros dos formularios -->
+              <div
+                class="d-flex flex-column flex-md-row gap-2 justify-content-center"
+              >
+                {% if filter_task %}
+                <form
+                  action="{% url 'complete_task' filter_task.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button class="btn btn-secondary w-100">Complete Task</button>
+                </form>
+                {% else %}
+                <p>No hay tarea para completar.</p>
+                {% endif %} {% if filter_task %}
+                <form
+                  action="{% url 'remove_task' filter_task.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button class="btn btn-danger w-100">Remove Task</button>
+                </form>
+                {% else %}
+                <p>No hay tarea para borrar.</p>
+                {% endif %}
+              </div>
             </div>
           </div>
         </section>
       </div>
     </main>
+    {% endblock %}
   </body>
 </html>
